@@ -6,13 +6,19 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // SMTP configuration
-const transporter = nodemailer.createTransport({
-    host: "smtpout.secureserver.net",
+const transporter = nodemailer.createTransport({    
+    host: "smtpout.secureserver.net",  
+    secure: true,
+    secureConnection: false, // TLS requires secureConnection to be false
+    tls: {
+        ciphers:'SSLv3'
+    },
+    requireTLS:true,
     port: 465,
-    secure: true, // use SSL
+    debug: true,
     auth: {
         user: "info@zoommantra.com",
-        pass: "Team@121"
+        pass: "Test@121" 
     }
 });
 
@@ -26,7 +32,7 @@ app.post('/app/send-email', (req, res) => {
 
     const mailOptions = {
         from: '"Zoommantra celebrity" <noreplay@zoommantra.ae>',
-        to: 'info@zoommantra.com',
+        to: 'aizoommantra@gmail.com',
         subject: 'Lead From zoommantra celebrity landing page',
         html: html
     };
